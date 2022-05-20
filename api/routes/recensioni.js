@@ -8,8 +8,13 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+    const recensione = {
+        name: req.body.name,
+        rating: req.body.rating,
+    };
     res.status(200).json({
-        message: 'Handling POST requests to /recensioni'
+        message: 'Handling POST requests to /recensioni',
+        recensione: recensione,
     });
 });
 
