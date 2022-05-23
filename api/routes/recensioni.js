@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
         .then(elems => {
             console.log(elems);
 
-            if(elems) {
+            if(elems.length >= 0 ) {
                 res.status(200).json(elems);
             } else {
                 res.status(404).json({messaggio: 'Nessun elemento trovato'});
@@ -57,10 +57,18 @@ router.get('/:recensioneId', (req, res, next) => {
         .catch(err => console.log(err));
 });
 
-router.patch('/:recensioneId', (req, res, next) => {
-    res.status(200).json({
-        message: 'Recensione modificata',
-    });
+router.delete('/:recensioneId', (req, res, next) => {
+    const id = req.params.recensioneId;
+
+    Recensione.deleteOne({_id: id})
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err})
+        })
 });
 
 module.exports = router;
