@@ -1,37 +1,60 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+const Recensione = require('../models/recensioni.js');
 
 router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'Handling GET requests to /recensioni'
-    });
+    Recensione.find()
+        .exec()
+        .then(elems => {
+            console.log(elems);
+
+            if(elems) {
+                res.status(200).json(elems);
+            } else {
+                res.status(404).json({messaggio: 'Nessun elemento trovato'});
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err});
+        })
 });
 
 router.post('/', (req, res, next) => {
-    const recensione = {
+    const recensione = new Recensione({
+        _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         rating: req.body.rating,
-    };
-    res.status(200).json({
-        message: 'Handling POST requests to /recensioni',
-        recensione: recensione,
     });
+
+    recensione.save().then(result => {
+        console.log(result);
+
+        res.status(200).json({
+            message: 'Handling POST requests to /recensioni',
+            recensione: result,
+        });
+    }).catch(error => console.log(error));
+
+    
 });
 
 router.get('/:recensioneId', (req, res, next) => {
     const id = req.params.recensioneId;
 
-    if (id === 'special') {
-        res.status(200).json({
-            message: 'Recensione speciale',
-            id: id
+    Recensione.findById(id)
+        .exec()
+        .then(elem => {
+            console.log('From database ' + elem);
+            if(elem) {
+                res.status(200).json(elem);
+            } else {
+                res.status(404).json({message: 'Recensione non trovata'});
+            }
+            
         })
-    } else {
-        res.status(200).json({
-            message: 'Recensione con id',
-            id: id
-        })
-    }
+        .catch(err => console.log(err));
 });
 
 router.patch('/:recensioneId', (req, res, next) => {
