@@ -12,7 +12,7 @@ export default {
       console.log('id oggetto ' + this.id);
 
       axios
-        .delete('http://localhost:5000/recensioni/' + this.id)
+        .delete('http://localhost:4000/recensioni/' + this.id)
         .then((response) => {
           if (response.status == 200) {
             alert('Eliminazione avvenuta con successo');

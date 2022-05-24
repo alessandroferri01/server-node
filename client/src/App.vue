@@ -7,6 +7,7 @@
 import LearningSurvey from './components/survey/LearningSurvey.vue';
 import UserExperiences from './components/survey/UserExperiences.vue';
 
+//test
 export default {
   components: {
     LearningSurvey,

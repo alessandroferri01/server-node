@@ -65,7 +65,7 @@ export default {
       // });
 
       this.error = null;
-      axios.post('http://localhost:5000/recensioni', {
+      axios.post('http://localhost:4000/recensioni', {
         name: this.enteredName,
         rating: this.chosenRating
       }).catch((error) => {

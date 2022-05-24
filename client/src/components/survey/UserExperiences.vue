@@ -42,7 +42,7 @@ export default {
     loadExperiences() {
       this.isLoading = true;
       this.error = null;
-      axios.get('http://localhost:5000/recensioni').then((response) => {
+      axios.get('http://localhost:4000/recensioni').then((response) => {
         if (response.status == 200) {
           return response.data;
         }
